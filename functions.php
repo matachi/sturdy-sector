@@ -1,10 +1,13 @@
 <?php
 
+if ( $_POST['update_themeoptions'] == 'true' )
+    themeoptions_update();
+
 /**
  * Sets up the content width value based on the theme's design and stylesheet.
  */
 if ( ! isset( $content_width ) )
-	$content_width = 700;
+    $content_width = 700;
 
 /**
  * Sets up theme defaults and registers the various WordPress features that
@@ -143,17 +146,17 @@ if ( ! function_exists( 'sturdysector_content_nav' ) ) :
  * @since Twenty Twelve 1.0
  */
 function sturdysector_content_nav( $html_id ) {
-	global $wp_query;
+    global $wp_query;
 
-	$html_id = esc_attr( $html_id );
+    $html_id = esc_attr( $html_id );
 
-	if ( $wp_query->max_num_pages > 1 ) : ?>
-		<nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
-			<h3 class="assistive-text"><?php _e( 'Post navigation', 'sturdysector' ); ?></h3>
-			<div class="nav-previous alignleft"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'sturdysector' ) ); ?></div>
-			<div class="nav-next alignright"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'sturdysector' ) ); ?></div>
-		</nav><!-- #<?php echo $html_id; ?> .navigation -->
-	<?php endif;
+    if ( $wp_query->max_num_pages > 1 ) : ?>
+        <nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
+            <h3 class="assistive-text"><?php _e( 'Post navigation', 'sturdysector' ); ?></h3>
+            <div class="nav-previous alignleft"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'sturdysector' ) ); ?></div>
+            <div class="nav-next alignright"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'sturdysector' ) ); ?></div>
+        </nav><!-- #<?php echo $html_id; ?> .navigation -->
+    <?php endif;
 }
 endif;
 
@@ -169,55 +172,84 @@ if ( ! function_exists( 'sturdysector_comment' ) ) :
  * @since Twenty Twelve 1.0
  */
 function sturdysector_comment( $comment, $args, $depth ) {
-	$GLOBALS['comment'] = $comment;
-	switch ( $comment->comment_type ) :
-		case 'pingback' :
-		case 'trackback' :
-		// Display trackbacks differently than normal comments.
-	?>
-	<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-		<p><?php _e( 'Pingback:', 'sturdysector' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( '(Edit)', 'sturdysector' ), '<span class="edit-link">', '</span>' ); ?></p>
-	<?php
-			break;
-		default :
-		// Proceed with normal comments.
-		global $post;
-	?>
-	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-		<article id="comment-<?php comment_ID(); ?>" class="comment">
-			<header class="comment-meta comment-author vcard">
-				<?php
-					echo get_avatar( $comment, 44 );
-					printf( '<cite class="fn">%1$s %2$s</cite>',
-						get_comment_author_link(),
-						// If current post author is also comment author, make it known visually.
-						( $comment->user_id === $post->post_author ) ? '<span> ' . __( 'Post author', 'sturdysector' ) . '</span>' : ''
-					);
-					printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
-						esc_url( get_comment_link( $comment->comment_ID ) ),
-						get_comment_time( 'c' ),
-						/* translators: 1: date, 2: time */
-						sprintf( __( '%1$s at %2$s', 'sturdysector' ), get_comment_date(), get_comment_time() )
-					);
-				?>
-			</header><!-- .comment-meta -->
+    $GLOBALS['comment'] = $comment;
+    switch ( $comment->comment_type ) :
+        case 'pingback' :
+        case 'trackback' :
+        // Display trackbacks differently than normal comments.
+    ?>
+    <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+        <p><?php _e( 'Pingback:', 'sturdysector' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( '(Edit)', 'sturdysector' ), '<span class="edit-link">', '</span>' ); ?></p>
+    <?php
+            break;
+        default :
+        // Proceed with normal comments.
+        global $post;
+    ?>
+    <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+        <article id="comment-<?php comment_ID(); ?>" class="comment">
+            <header class="comment-meta comment-author vcard">
+                <?php
+                    echo get_avatar( $comment, 44 );
+                    printf( '<cite class="fn">%1$s %2$s</cite>',
+                        get_comment_author_link(),
+                        // If current post author is also comment author, make it known visually.
+                        ( $comment->user_id === $post->post_author ) ? '<span> ' . __( 'Post author', 'sturdysector' ) . '</span>' : ''
+                    );
+                    printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
+                        esc_url( get_comment_link( $comment->comment_ID ) ),
+                        get_comment_time( 'c' ),
+                        /* translators: 1: date, 2: time */
+                        sprintf( __( '%1$s at %2$s', 'sturdysector' ), get_comment_date(), get_comment_time() )
+                    );
+                ?>
+            </header><!-- .comment-meta -->
 
-			<?php if ( '0' == $comment->comment_approved ) : ?>
-				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'sturdysector' ); ?></p>
-			<?php endif; ?>
+            <?php if ( '0' == $comment->comment_approved ) : ?>
+                <p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'sturdysector' ); ?></p>
+            <?php endif; ?>
 
-			<section class="comment-content comment">
-				<?php comment_text(); ?>
-				<?php edit_comment_link( __( 'Edit', 'sturdysector' ), '<p class="edit-link">', '</p>' ); ?>
-			</section><!-- .comment-content -->
+            <section class="comment-content comment">
+                <?php comment_text(); ?>
+                <?php edit_comment_link( __( 'Edit', 'sturdysector' ), '<p class="edit-link">', '</p>' ); ?>
+            </section><!-- .comment-content -->
 
-			<div class="reply">
-				<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'sturdysector' ), 'after' => ' <span>&darr;</span>', 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-			</div><!-- .reply -->
-		</article><!-- #comment-## -->
-	<?php
-		break;
-	endswitch; // end comment_type check
+            <div class="reply">
+                <?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'sturdysector' ), 'after' => ' <span>&darr;</span>', 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+            </div><!-- .reply -->
+        </article><!-- #comment-## -->
+    <?php
+        break;
+    endswitch; // end comment_type check
 }
 endif;
+
+function themeoptions_admin_menu() {
+    add_theme_page("Theme Options", "Theme Options", 'edit_themes', basename(__FILE__), 'themeoptions_page');
+}
+
+function themeoptions_page() {
+    ?>
+    <div class="wrap">
+        <div id="icon-themes" class="icon32"><br /></div>
+        <h2>Theme Options</h2>
+        <form method="POST" action="">
+            <input type="hidden" name="update_themeoptions" value="true" />
+
+            <h4><input type="checkbox" name="display_twitter_icon" id="display_twitter_icon" value="true" <?php echo get_option( 'sturdysector_display_twitter_icon' ) == 'true' ? 'checked ' : ''; ?>/> Display Twitter icon</h4>
+            <p><input type="text" name="twitter_username" id="twitter_username" size="32" value="<?php echo get_option( 'sturdysector_twitter_username' ); ?>" /> Twitter Username</p>
+
+            <p><input type="submit" name="search" value="Update Options" class="button" /></p>
+        </form>
+
+    </div>
+    <?php
+}
+add_action('admin_menu', 'themeoptions_admin_menu');
+
+function themeoptions_update() {
+    update_option( 'sturdysector_display_twitter_icon', empty($_POST['display_twitter_icon']) ? 'false' : 'true' );
+    update_option( 'sturdysector_twitter_username', $_POST['twitter_username'] );
+}
+
 ?>

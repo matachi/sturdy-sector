@@ -54,6 +54,10 @@ header#page {
     width: 100%;
 }
 
+header#page .wrapper {
+    position: relative;
+}
+
 #title {
     color: #222;
     float: left;
@@ -64,17 +68,17 @@ header#page {
     width: 750px;
 }
 
-section#social-media {
+/*section#social-media {
     float: right;
     height: 70px;
     margin: 20px 0 0 0;
     width: 150px;
-
-}
+}*/
 
 section.social-media-button {
     background: #fff;
     border-radius: 8px;
+    /*float: left;*/
     float: left;
     margin: 0 10px 0 0;
     width: 64px;
@@ -106,11 +110,23 @@ section.social-media-button a:hover {
     transform: rotate(2deg);
 }
 
-a#rss {
+#rss {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+#twitter {
+    position: absolute;
+    top: 20px;
+    right: 84px;
+}
+
+#rss a {
     background: url('images/social-media/rss_64.png') no-repeat;
 }
 
-a#twitter {
+#twitter a {
     background: url('images/social-media/twitter_64.png') no-repeat;
 }
 

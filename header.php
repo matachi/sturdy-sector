@@ -28,14 +28,14 @@
             <section id="title">
                 <?php bloginfo( 'name' ); ?>
             </section>
-            <section id="social-media">
-                <section class="social-media-button">
-                    <a href="https://twitter.com/DanielJonss" id="twitter">Twitter</a>
+                <?php if ( get_option( 'sturdysector_display_twitter_icon' ) == 'true' ) : ?>
+                <section class="social-media-button" id="twitter">
+                    <a href="https://twitter.com/<?php echo get_option( 'sturdysector_twitter_username' ); ?>">Twitter</a>
                 </section>
-                <section class="social-media-button">
-                    <a href="<?php bloginfo('rss2_url'); ?>" id="rss">RSS</a>
+                <?php endif; ?>
+                <section class="social-media-button" id="rss">
+                    <a href="<?php bloginfo('rss2_url'); ?>">RSS</a>
                 </section>
-            </section>
             <nav id="page">
                 <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
             </nav>
