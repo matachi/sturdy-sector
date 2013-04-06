@@ -286,6 +286,49 @@ body .aligncenter {
 }
 
 /*
+ * Content images
+ */
+.wp-caption {
+    margin-bottom: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px 3px 3px 3px;
+    padding: 4px 4px 2px;
+    max-width: 490px;
+}
+
+.wp-caption a img {
+    border: 2px solid #17589a;
+    margin: 3px 3px 0 3px;
+    -moz-transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+.wp-caption a img:hover {
+    border: 2px solid #9d2b2b;
+    box-shadow: 0 0 5px #cd5d5d;
+    margin: 3px 3px 0 3px;
+}
+
+.wp-caption img {
+    margin: 5px 5px 0 5px;
+}
+
+.wp-caption a {
+    display: block;
+    margin: 0px;
+    border: medium none;
+}
+
+.wp-caption .wp-caption-text {
+    margin: 0 0 5px;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+/*
  * Comments
  */
 .comments-title {
