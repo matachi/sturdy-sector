@@ -329,6 +329,16 @@ body .aligncenter {
 }
 
 /*
+ * Content syntaxhighlighter
+ */
+.entry-content .syntaxhighlighter .number code {
+    padding-top: 3px !important;
+}
+.entry-content .syntaxhighlighter code {
+    font-size: 0.8em !important;
+}
+
+/*
  * Comments
  */
 .comments-title {
